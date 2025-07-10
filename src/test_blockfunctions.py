@@ -29,7 +29,7 @@ This is the same paragraph on a new line
         self.assertEqual(BlockType.HEADING, blocktype)
 
     def test_code_block(self):
-        md = "``` This is a code block ```"
+        md = "```\nThis is a code block\n```"
         blocktype = block_to_block_type(md)
         self.assertEqual(BlockType.CODE, blocktype)
 

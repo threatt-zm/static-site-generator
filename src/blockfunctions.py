@@ -7,12 +7,12 @@ def markdown_to_blocks(markdown):
     new_blocks = list(filter(lambda x: x != "", strip_blocks))
     return new_blocks
 
-def block_to_block_type(markdown):
-    lines = markdown.split("\n")
+def block_to_block_type(block):
+    lines = block.split("\n")
 
-    if all(list(map(lambda x: re.match(r"^#{1,6} \w+", x), lines))):
+    if block.startswith(('# ', '## ', '### ', '#### ', '##### ', '###### ')):
         return BlockType.HEADING
-    if all(list(map(lambda x: x.startswith("```") and x.endswith("```"), lines))):
+    if len(lines) > 1 and lines[0].startswith("```") and lines[-1].startswith("```"):
         return BlockType.CODE
     if all(list(map(lambda x: x.startswith(">"), lines))):
         return BlockType.QUOTE
