@@ -1,6 +1,6 @@
 import unittest
 from textnode import TextNode, TextType
-from nodefunctions import text_node_to_html_node, split_nodes_delimiter, extract_markdown_images, extract_markdown_links, split_nodes_image, split_nodes_link
+from nodefunctions import text_node_to_html_node, split_nodes_delimiter, extract_markdown_images, extract_markdown_links, split_nodes_image, split_nodes_link, text_to_textnodes
 
 class TestNodeFunctions(unittest.TestCase):    
     def test_plain_text(self):
@@ -98,14 +98,35 @@ class TestNodeFunctions(unittest.TestCase):
             TextType.PLAIN_TEXT,
         )
         new_nodes = split_nodes_link([node])
-        [
-            TextNode("This is text with a link ", TextType.PLAIN_TEXT),
-            TextNode("to boot dev", TextType.LINK, "https://www.boot.dev"),
-            TextNode(" and ", TextType.PLAIN_TEXT),
-            TextNode(
-                "to youtube", TextType.LINK, "https://www.youtube.com/@bootdotdev"
-            ),
-        ]
+        self.assertListEqual(
+            [
+                TextNode("This is text with a link ", TextType.PLAIN_TEXT),
+                TextNode("to boot dev", TextType.LINK, "https://www.boot.dev"),
+                TextNode(" and ", TextType.PLAIN_TEXT),
+                TextNode(
+                    "to youtube", TextType.LINK, "https://www.youtube.com/@bootdotdev"
+                ),
+            ],
+            new_nodes,
+        )
+
+    def test_text_to_textnodes(self):
+        nodes = text_to_textnodes("This is **text** with an _italic_ word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)")
+        self.assertListEqual(
+            [
+                TextNode("This is ", TextType.PLAIN_TEXT),
+                TextNode("text", TextType.BOLD_TEXT),
+                TextNode(" with an ", TextType.PLAIN_TEXT),
+                TextNode("italic", TextType.ITALIC_TEXT),
+                TextNode(" word and a ", TextType.PLAIN_TEXT),
+                TextNode("code block", TextType.CODE_TEXT),
+                TextNode(" and an ", TextType.PLAIN_TEXT),
+                TextNode("obi wan image", TextType.IMAGE, "https://i.imgur.com/fJRm4Vk.jpeg"),
+                TextNode(" and a ", TextType.PLAIN_TEXT),
+                TextNode("link", TextType.LINK, "https://boot.dev"),
+            ],
+            nodes,
+        )
 
 if __name__ == "__main__":
     unittest.main() 
