@@ -28,27 +28,22 @@ This is the same paragraph on a new line
         blocktype = block_to_block_type(md)
         self.assertEqual(BlockType.HEADING, blocktype)
 
-    def test_code_block(self):
         md = "```\nThis is a code block\n```"
         blocktype = block_to_block_type(md)
         self.assertEqual(BlockType.CODE, blocktype)
 
-    def test_quote_block(self):
         md = "> This is a quote that\n> is broken into \n> multiple lines"
         blocktype = block_to_block_type(md)
         self.assertEqual(BlockType.QUOTE, blocktype)
 
-    def test_unordered_list(self):
         md = "- This is the first item of the unordered list\n- This is the second item of the unordered list\n- This is the third item of the unordered list"
         blocktype = block_to_block_type(md)
         self.assertEqual(BlockType.UNORDERED_LIST, blocktype)
 
-    def test_ordered_list(self):
         md = "1. This is the first item of the ordered list\n2. This is the second item of the ordered list\n3. This is the third item of the ordered list"
         blocktype = block_to_block_type(md)
         self.assertEqual(BlockType.ORDERED_LIST, blocktype)
 
-    def test_paragraph(self):
         md = "This is a normal paragraph"
         blocktype = block_to_block_type(md)
         self.assertEqual(BlockType.PARAGRAPH, blocktype)
