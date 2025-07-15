@@ -29,7 +29,7 @@ def split_nodes_delimiter(old_nodes, delimeter, text_type):
         for section in sections:
             if section == "":
                 continue
-            if section.startswith(" ") or section.endswith(" "):
+            if sections.index(section) % 2 == 0:
                 new_nodes.append(TextNode(section, TextType.PLAIN_TEXT))
             else:
                 new_nodes.append(TextNode(section, text_type))
