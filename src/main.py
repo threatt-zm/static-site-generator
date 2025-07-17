@@ -1,5 +1,7 @@
 import os
 import shutil
+from pagemethods import generate_page
+
 
 def copy_static(src, dest):
     base_dir = "/home/threatt_zm/static-site-generator"
@@ -24,6 +26,7 @@ def copy_static(src, dest):
 
 def main():
     copy_static("static", "public")
+    generate_page("content/index.md", "template.html", "public/index.html")
 
 
 if __name__ == '__main__':
